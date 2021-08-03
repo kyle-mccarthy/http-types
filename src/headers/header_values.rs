@@ -170,6 +170,22 @@ impl<'a> IntoIterator for &'a HeaderValues {
     }
 }
 
+impl From<Vec<HeaderValue>> for HeaderValues {
+    fn from(headers: Vec<HeaderValue>) -> Self {
+        Self { inner: headers }
+    }
+}
+
+impl IntoIterator for HeaderValues {
+    type Item = HeaderValue;
+    type IntoIter = std::vec::IntoIter<HeaderValue>;
+
+    #[inline]
+    fn into_iter(self) -> Self::IntoIter {
+        self.inner.into_iter()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
